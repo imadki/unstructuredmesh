@@ -37,11 +37,7 @@ packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
 install_requires = [
     'numpy',
     'meshio<4',
-    'mpi4py',
-    'mgmetis',
-    'numba>0.4',
     'scipy',
-    #'timeit',
     ]
 
 def setup_package():

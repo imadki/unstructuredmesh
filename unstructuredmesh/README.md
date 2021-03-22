@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pyccel/manapy.svg?branch=master)](https://travis-ci.org/pyccel/manapy)
+[![Build Status](https://travis-ci.org/imadki/unstructuredmesh.svg?branch=master](https://travis-ci.org/pyccel/manapy)
 
 # manapy
 Coming soon

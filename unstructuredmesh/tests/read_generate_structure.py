@@ -18,12 +18,13 @@ except:
     BASE_DIR = os.path.join(BASE_DIR ,'..', '..')
     MESH_DIR = os.path.join(BASE_DIR, 'mesh')
 
-#reading gmsh file and partitioning into size subdomains
+#File name
 filename = os.path.join(MESH_DIR, "rectangle.msh")
 
-#generating local grid for each subdomain
+#Read gmsh file
 ddm.readmesh(filename)
 
+#Create the informations about cells, faces and nodes
 grid = ddm.generate_structure()
 
 faces = grid["faces"]

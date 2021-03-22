@@ -15,7 +15,14 @@ import numpy as np
 
 __all__ = ['readmesh']
 
-def readmesh(filename):
+def readmesh(filename, dim):
+
+    if dim == 2 :
+        typeOfCells = "triangle"
+        typeOfFaces = "line"
+    else:
+        typeOfCells = "tetra"
+        typeOfFaces = "triangle"
 
     def load_gmsh_mesh(filename):
         #mesh = meshio.gmsh.read(filename)
@@ -24,9 +31,10 @@ def readmesh(filename):
 
     def create_cell_nodeid(mesh):
         cell_nodeid = []
-
+        
         if type(mesh.cells) == dict:
-            cell_nodeid = mesh.cells["triangle"]
+            cell_nodeid = mesh.cells[typeOfCells]
+
         elif type(mesh.cells) == list:
             cell_nodeid = mesh.cells[1].data
 
@@ -40,31 +48,31 @@ def readmesh(filename):
 
         if type(mesh.cells) == dict:
             for i, j in mesh.cell_data.items():
-                if i == "line":
+                if i == typeOfFaces:
                     ghost = j.get('gmsh:physical')
 
             for i, j in mesh.cells.items():
-                if i == "line":
+                if i == typeOfFaces:
                     for k in range(len(j)):
-                        for index in range(2):
+                        for index in range(dim):
                             if ghost[k] > 2:
                                 ghost_nodes[j[k][index]] = int(ghost[k])
             for i, j in mesh.cells.items():
-                if i == "line":
+                if i == typeOfFaces:
                     for k in range(len(j)):
-                        for index in range(2):
+                        for index in range(dim):
                             if ghost[k] <= 2:
                                 ghost_nodes[j[k][index]] = int(ghost[k])
 
         elif type(mesh.cells) == list:
             ghost = mesh.cell_data['gmsh:physical'][0]
             for i in range(len(mesh.cells[0].data)):
-                for j in range(2):
+                for j in range(dim):
                     if ghost[i] > 2:
                         ghost_nodes[mesh.cells[0].data[i][j]] = int(ghost[i])
 
             for i in range(len(mesh.cells[0].data)):
-                for j in range(2):
+                for j in range(dim):
                     if ghost[i] <= 2:
                         ghost_nodes[mesh.cells[0].data[i][j]] = int(ghost[i])
 

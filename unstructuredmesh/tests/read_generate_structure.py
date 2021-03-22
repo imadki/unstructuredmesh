@@ -19,13 +19,14 @@ except:
     MESH_DIR = os.path.join(BASE_DIR, 'mesh')
 
 #File name
-filename = os.path.join(MESH_DIR, "rectangle.msh")
+filename = os.path.join(MESH_DIR, "cube.msh")
 
+dim = 3
 #Read gmsh file
-ddm.readmesh(filename)
+ddm.readmesh(filename, dim=dim)
 
 #Create the informations about cells, faces and nodes
-grid = ddm.generate_structure()
+grid = ddm.generate_structure(dim=dim)
 
 faces = grid["faces"]
 cells = grid["cells"]

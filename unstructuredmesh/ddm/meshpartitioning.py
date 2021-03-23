@@ -120,4 +120,4 @@ def readmesh(filename, dim):
 
     stop = timeit.default_timer()
 
-    print('Global Execution Time: ', stop - start)
+    print('Read '+str(dim)+'d Mesh : ', stop - start)

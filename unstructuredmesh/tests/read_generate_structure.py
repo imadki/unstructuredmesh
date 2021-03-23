@@ -18,10 +18,13 @@ except:
     BASE_DIR = os.path.join(BASE_DIR ,'..', '..')
     MESH_DIR = os.path.join(BASE_DIR, 'mesh')
 
+dim = 2
 #File name
-filename = os.path.join(MESH_DIR, "cube.msh")
+if dim == 2:
+    filename = os.path.join(MESH_DIR, "rectangle.msh")
+elif dim == 3:
+    filename = os.path.join(MESH_DIR, "cube.msh")
 
-dim = 3
 #Read gmsh file
 ddm.readmesh(filename, dim=dim)
 

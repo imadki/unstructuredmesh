@@ -13,13 +13,14 @@ def create_info_2dfaces(cellid:'int[:,:]', nodeid:'int[:,:]', namen:'int[:]', ve
         if (cellid[i][1] == -1 and cellid[i][1] != -10):
             if namen[nodeid[i][0]] == namen[nodeid[i][1]]:
                 namef[i] = namen[nodeid[i][0]]
-            if ((namen[nodeid[i][0]] == 3 and namen[nodeid[i][1]] != 0) or
+            elif ((namen[nodeid[i][0]] == 3 and namen[nodeid[i][1]] != 0) or
                     (namen[nodeid[i][0]] != 0 and namen[nodeid[i][1]] == 3)):
                 namef[i] = 3
-            if ((namen[nodeid[i][0]] == 4 and namen[nodeid[i][1]] != 0) or
+            elif ((namen[nodeid[i][0]] == 4 and namen[nodeid[i][1]] != 0) or
                     (namen[nodeid[i][0]] != 0 and namen[nodeid[i][1]] == 4)):
                 namef[i] = 4
-                
+            else:
+                namef[i] = 100
         
         norm[0] = vertex[nodeid[i][0]][1] - vertex[nodeid[i][1]][1]
         norm[1] = vertex[nodeid[i][1]][0] - vertex[nodeid[i][0]][0]
@@ -49,8 +50,21 @@ def create_info_3dfaces(cellid:'int[:,:]', nodeid:'int[:,:]', namen:'int[:]', ve
     v      = zeros(3, dtype=double)
     
     for i in range(nbfaces):
-        if (cellid[i][1] == -1):
-            namef[i] = 1
+        if (cellid[i][1] == -1 ):
+            if namen[nodeid[i][0]] == namen[nodeid[i][1]] and namen[nodeid[i][0]] == namen[nodeid[i][2]] :
+                namef[i] = namen[nodeid[i][0]]
+            
+            elif ((namen[nodeid[i][0]] == 3 and namen[nodeid[i][1]] != 0 and namen[nodeid[i][2]] != 0) or
+                (namen[nodeid[i][0]] != 0 and namen[nodeid[i][1]] == 3 and namen[nodeid[i][2]] != 0) or 
+                (namen[nodeid[i][0]] != 0 and namen[nodeid[i][1]] != 0 and namen[nodeid[i][2]] != 3)):
+                namef[i] = 3
+            
+            elif ((namen[nodeid[i][0]] == 4 and namen[nodeid[i][1]] != 0 and namen[nodeid[i][2]] != 0) or
+                (namen[nodeid[i][0]] != 0 and namen[nodeid[i][1]] == 4 and namen[nodeid[i][2]] != 0) or 
+                (namen[nodeid[i][0]] != 0 and namen[nodeid[i][1]] != 0 and namen[nodeid[i][2]] != 4)):
+                namef[i] = 4
+            else:
+                namef[i] = 100
         
         u[:] = vertex[nodeid[i][1]][0:3]-vertex[nodeid[i][0]][0:3]
         v[:] = vertex[nodeid[i][2]][0:3]-vertex[nodeid[i][0]][0:3]

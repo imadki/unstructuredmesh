@@ -551,11 +551,11 @@ def create_3d_halo_structure(file):
             nod2 = Faces.nodeid[i][0]
             nod3 = Faces.nodeid[i][2]
             
-            n = Faces.normal[i]
+            n = Faces.normal[i]/Faces.mesure[i]
             
             c_left = Faces.cellid[i][0]
             v_1 = Cells.center[c_left]
-            u = Faces.center[i][:] - n[:]
+            u = Faces.center[i][:] - v_1[:]
             gamma = dot(u, n)
             
             kk[0] = v_1[0] + gamma*n[0];

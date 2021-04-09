@@ -20,3 +20,8 @@ or in repository tests
 ```python
 python3  read_generate_structure.py
 ```
+
+on repository unstructuredmesh/ddm/
+```python
+pyccel module.py
+```

@@ -91,6 +91,7 @@ def readmesh(filename, dim, size):
     def load_gmsh_mesh(filename):
         #mesh = meshio.gmsh.read(filename)
         mesh = meshio.read(filename)
+        
         return mesh
 
     def create_cell_nodeid(mesh):
@@ -247,14 +248,11 @@ def readmesh(filename, dim, size):
                         s_2 = cell_nodeid[haloext[(i, neighsub[i][j])][k]][1]
                         s_3 = cell_nodeid[haloext[(i, neighsub[i][j])][k]][2]
             
-                        x_1 = nodes[s_1][0]
-                        y_1 = nodes[s_1][1]
-                        x_2 = nodes[s_2][0]
-                        y_2 = nodes[s_2][1]
-                        x_3 = nodes[s_3][0]
-                        y_3 = nodes[s_3][1]
+                        x_1 = nodes[s_1][0]; y_1 = nodes[s_1][1]; z_1 = nodes[s_1][2]
+                        x_2 = nodes[s_2][0]; y_2 = nodes[s_2][1]; z_2 = nodes[s_2][2]
+                        x_3 = nodes[s_3][0]; y_3 = nodes[s_3][1]; z_3 = nodes[s_3][2] 
             
-                        centvol[i].append([1./3 * (x_1 + x_2 + x_3), 1./3*(y_1 + y_2 + y_3), 0.,
+                        centvol[i].append([1./3 * (x_1 + x_2 + x_3), 1./3*(y_1 + y_2 + y_3), 1./3*(z_1 + z_2 + z_3) ,
                                            (1./2) * abs((x_1-x_2)*(y_1-y_3)-(x_1-x_3)*(y_1-y_2))])
     
         if dim == 3:

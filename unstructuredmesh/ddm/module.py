@@ -95,11 +95,11 @@ def Compute_2dcentervolumeOfCell(nodeid:'int[:,:]', vertex:'double[:,:]', nbelem
         s_2 = nodeid[i][1]
         s_3 = nodeid[i][2]
 
-        x_1 = vertex[s_1][0]; y_1 = vertex[s_1][1]
-        x_2 = vertex[s_2][0]; y_2 = vertex[s_2][1]
-        x_3 = vertex[s_3][0]; y_3 = vertex[s_3][1]
+        x_1 = vertex[s_1][0]; y_1 = vertex[s_1][1]; z_1 = vertex[s_1][2]
+        x_2 = vertex[s_2][0]; y_2 = vertex[s_2][1]; z_2 = vertex[s_2][2]
+        x_3 = vertex[s_3][0]; y_3 = vertex[s_3][1]; z_3 = vertex[s_3][2]
 
-        center[i][0] = 1./3 * (x_1 + x_2 + x_3); center[i][1] = 1./3*(y_1 + y_2 + y_3); center[i][2] =  0.
+        center[i][0] = 1./3 * (x_1 + x_2 + x_3); center[i][1] = 1./3*(y_1 + y_2 + y_3); center[i][2] =  1./3*(z_1 + z_2 + z_3)
         volume[i] = (1./2) * abs((x_1-x_2)*(y_1-y_3)-(x_1-x_3)*(y_1-y_2))
       
         var1 = (x_2-x_1)*(y_3-y_1)-(y_2-y_1)*(x_3-x_1)

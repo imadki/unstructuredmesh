@@ -628,6 +628,7 @@ RANK = COMM.Get_rank()
 def generate_structure(dim, size):
     
     import os
+    dim = int(dim)
 
     MESH_DIR = "meshes"+str(SIZE)+"PROC"
     filename = os.path.join(MESH_DIR, 'mesh'+str(RANK)+'.txt')

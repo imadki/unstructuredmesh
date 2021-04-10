@@ -25,11 +25,16 @@ except:
     BASE_DIR = os.path.join(BASE_DIR ,'..', '..')
     MESH_DIR = os.path.join(BASE_DIR, 'mesh')
 
-dim = 3
+dim = 2.5
+
+
 #File name
 if dim == 2:
-    filename = os.path.join(MESH_DIR, "rectangle.msh")
+    filename = os.path.join(MESH_DIR, "cobra.msh")
     typeofCells = 'triangle'
+elif dim == 2.5:
+    filename = os.path.join(MESH_DIR, "cobra.msh")
+    typeofCells = 'triangle'    
 elif dim == 3:
     filename = os.path.join(MESH_DIR, "cube.msh")
     typeofCells = 'tetra'

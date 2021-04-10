@@ -84,14 +84,20 @@ def readmesh(filename, dim, size):
     if dim == 2 :
         typeOfCells = "triangle"
         typeOfFaces = "line"
+    elif dim == 2.5 :
+        typeOfCells = "triangle"
+        typeOfFaces = "triangle"
     else:
         typeOfCells = "tetra"
         typeOfFaces = "triangle"
+        
+    dim = int(dim)
 
     def load_gmsh_mesh(filename):
         #mesh = meshio.gmsh.read(filename)
         mesh = meshio.read(filename)
         
+        print(mesh.cell_data)
         return mesh
 
     def create_cell_nodeid(mesh):

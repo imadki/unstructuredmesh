@@ -91,11 +91,14 @@ def readmesh(filename, dim, size):
         typeOfCells = "tetra"
         typeOfFaces = "triangle"
         
-    dim = int(dim)
+    # dim = int(dim)
+    if dim == 2.5:
+        dim = 3
 
     def load_gmsh_mesh(filename):
         #mesh = meshio.gmsh.read(filename)
         mesh = meshio.read(filename)
+        
         
         print(mesh.cell_data)
         return mesh
@@ -116,11 +119,16 @@ def readmesh(filename, dim, size):
 
     def define_ghost_node(mesh, nodes):
         ghost_nodes = [0]*len(nodes)
+        ghost_cells = [0]*len(mesh.cells['triangle'])
 
         if type(mesh.cells) == dict:
             for i, j in mesh.cell_data.items():
                 if i == typeOfFaces:
                     ghost = j.get('gmsh:physical')
+                    
+            for i, j in mesh.cell_data.items():
+                if i == typeOfFaces:
+                    ghost = j.get('medit:ref')
 
             for i, j in mesh.cells.items():
                 if i == typeOfFaces:
@@ -128,13 +136,15 @@ def readmesh(filename, dim, size):
                         for index in range(dim):
                             if ghost[k] > 2:
                                 ghost_nodes[j[k][index]] = int(ghost[k])
+                                ghost_cells[k] = int(ghost[k])
             for i, j in mesh.cells.items():
                 if i == typeOfFaces:
                     for k in range(len(j)):
                         for index in range(dim):
                             if ghost[k] <= 2:
                                 ghost_nodes[j[k][index]] = int(ghost[k])
-
+                                ghost_cells[k] = int(ghost[k])
+                                
         elif type(mesh.cells) == list:
             ghost = mesh.cell_data['gmsh:physical'][0]
             for i in range(len(mesh.cells[0].data)):
@@ -147,7 +157,7 @@ def readmesh(filename, dim, size):
                     if ghost[i] <= 2:
                         ghost_nodes[mesh.cells[0].data[i][j]] = int(ghost[i])
 
-        return ghost_nodes
+        return ghost_nodes, ghost_cells
 
     def create_nodes(mesh):
         nodes = []
@@ -163,7 +173,7 @@ def readmesh(filename, dim, size):
     #nodes of each cell
     cell_nodeid = create_cell_nodeid(mesh)
 
-    ghost_nodes = define_ghost_node(mesh, nodes)
+    ghost_nodes, ghost_cells = define_ghost_node(mesh, nodes)
     
     nbelements = len(cell_nodeid)
     nbnodes = len(nodes)
@@ -187,7 +197,12 @@ def readmesh(filename, dim, size):
     
         with open(filename, "a") as text_file:
             text_file.write("elements\n")
-            np.savetxt(text_file, cell_nodeid, fmt='%u')
+            # np.savetxt(text_file, cell_nodeid, fmt='%u')
+            for i in range(len(cell_nodeid)):
+                for j in range(3):
+                    text_file.write(str(cell_nodeid[i][j])+str(" "))
+                text_file.write(str(ghost_cells[i]))
+                text_file.write("\n")
             text_file.write("endelements\n")
             text_file.write("nodes\n")
             for i in range(len(nodes)):

@@ -36,7 +36,7 @@ packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
 # Dependencies
 install_requires = [
     'numba==0.53.0',
-    'pyccel==1.2.1',
+    'pyccel==1.2.3',
     'numpy',
     'meshio<4',
     'scipy',

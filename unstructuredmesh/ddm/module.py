@@ -7,7 +7,6 @@ def create_info_2dfaces(cellid:'int[:,:]', nodeid:'int[:,:]', namen:'int[:]', ve
     norm   = zeros(3, dtype=double)
     snorm  = zeros(3, dtype=double)
     
-    
     #Faces aux bords (1,2,3,4), Faces à l'interieur 0    A VOIR !!!!!
     for i in range(nbfaces):
         if (cellid[i][1] == -1 and cellid[i][1] != -10):

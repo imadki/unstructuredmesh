@@ -32,7 +32,7 @@ if dim == 2:
     filename = os.path.join(MESH_DIR, "rectangle.msh")
     typeofCells = 'triangle'
 elif dim == 2.5:
-    filename = os.path.join(MESH_DIR, "cobra.msh")
+    filename = os.path.join(MESH_DIR, "cube.mesh")
     typeofCells = 'triangle'    
 elif dim == 3:
     filename = os.path.join(MESH_DIR, "cube.msh")

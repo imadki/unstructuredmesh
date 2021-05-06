@@ -39,8 +39,9 @@ class Cells:
     halonid = []
     nf = [] 
     globalindex = OrderedDict()
+    name = []
     
-    def __init__(self, nodeid, faceid, center, volume, cellfid, cellnid, nf, globalindex, halonid):
+    def __init__(self, nodeid, faceid, center, volume, cellfid, cellnid, nf, globalindex, halonid, name):
         self.nodeid = nodeid    # instance variable unique to each instance
         self.faceid = faceid
         self.center = center
@@ -50,6 +51,7 @@ class Cells:
         self.halonid = halonid
         self.nf = nf
         self.globalindex = globalindex
+        self.name = name
         
 class Nodes:
     vertex = []
@@ -134,7 +136,13 @@ def CreateStructure(file, dim):
         if line == "halosint\n":
             break
         Nodes.vertex.append([double(x) for x in line.split()])
+    
+    Cells.name = zeros(len(Cells.nodeid))
+    for i in range(len(Cells.nodeid)):
+        Cells.name[i]   = Cells.nodeid[i][3]
+        Cells.nodeid[i] = Cells.nodeid[i][0:3]
         
+    
     Cells.nodeid = asarray(Cells.nodeid, dtype=int64)
     Nodes.vertex = asarray(Nodes.vertex, dtype=double)
     
@@ -372,7 +380,8 @@ def create_2d_halo_structure(file):
         
     cells = Cells(Cells.nodeid,  Cells.faceid, Cells.center,
                   Cells.volume,  Cells.cellfid, Cells.cellnid, 
-                  Cells.nf, Cells.globalindex, asarray(Cells.halonid))
+                  Cells.nf, Cells.globalindex, asarray(Cells.halonid),
+                  Cells.name)
     
     nodes = Nodes(Nodes.vertex, Nodes.name, Nodes.cellid, 
                   Nodes.ghostcenter, Nodes.globalindex, asarray(Nodes.halonid))
